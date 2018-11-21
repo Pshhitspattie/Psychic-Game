@@ -1,56 +1,61 @@
-var computerChoice = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 
-'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
 
-console.log(computerChoice);
+console.log(computerChoices);
 
-var userGuess;
-var wins = 0;
-var losses = 0;
-var gussesLeft = 9;
-var guessedLetters = [];
+		 var wins = 0;
+		 var losses = 0;
+		 var numGuesses = 10;
+		 var guessChoices = [];
 
-//grabs elements from the html text
+		 document.onkeyup = function(event) {
 
-var directionsText = document.getElementById("directions");
-var explanationText = document.getElementById("explanation");
-var winsText = document.getElementById("wins");
-var lossesText = document.getElementById("losses");
-var guessesLeftText = document.getElementById("guesses-left");
-var guessedLettersText = document.getElementById("guessed-letters");
+		 	var userGuess = event.key;
 
-console.log("This is a guess");
+		 	var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
 
-document.onkeyup = function(e) {
+		 	var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
+             
+             console.log(options);
 
-userGuess = e.key;
+			if (options.indexOf(userGuess) > -1) {
 
-var computerAnswer = computerChoice[Math.floor(Math.random() * computerChoice.length)];
+				if (userGuess === computerGuess) {
+                    alert("Are you a psychic???");
+					wins++;
+					numGuesses = 9;
+					guessChoices = [];
+                }
+                
+                
 
-guessedLetters.push(userGuess);
+				if (userGuess != computerGuess) {
+					numGuesses --;
+					guessChoices.push(userGuess);
+				}
 
+				if (numGuesses === 0) {
+                alert("Try Again!");
+				numGuesses = 9;
+				losses ++;
+				guessChoices = [];
 
+				
+			}
 
+			var html = 
+			"<h1> The Psychic Game </h1>" +
+			"<p>Guess what letter I'm thinking of!</p>" +
+			"<p>Wins: " + wins + "</p>" +
+			"<p>Losses: " + losses + "</p>" +
+			"<p>Guesses Left: " + numGuesses + "</p>" +
+			"<p>Your Guesses so far: " + guessChoices.join(", ") + "</p>";
 
+			document.querySelector("#game").innerHTML = html;
 
-userGuess.textContent = "You chose:" + userGuess;
-computerAnswer.textContent = "The computer chose:" + computerAnswer;
-    winsText.textContent = "wins:" + wins;
-    lossesText.textContent = "losses:" + losses;
-    guessesLeftText.textContent = "Guesses Left:" + guessesLeft;
-
-    if(userGuess === computerChoice) {
-        wins++;
-        guessesLeft = 9;
-    }
-    else {
-        guessesLeft--;
-    }
-    if(guessesLeft === 0) {
-        loses++;
-        guessesLeft = 9;
-        alert("Game Over! Try again");
-    };
-
-};
-
-
+			
+			}
+		};
+    
+    
+    
+    
